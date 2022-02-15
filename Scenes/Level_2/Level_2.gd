@@ -39,7 +39,7 @@ var mission_text_3= [
 func _ready():
 	music = [preload("res://Assets/Sounds/8 Bit Adventure.mp3"), preload("res://Assets/Sounds/Algar - Demomans Adventure-204087543.mp3")]
 	mines = 5
-	bg_frame = 1
+	bg_frame = 2
 	_start_level()
 
 func _mission(part):

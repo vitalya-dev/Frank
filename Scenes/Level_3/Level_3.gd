@@ -44,7 +44,7 @@ func _ready():
 		preload("res://Assets/Sounds/Bounty Battle - Animated Trailer theme-892202470.mp3")
 	]
 	mines = 5
-	bg_frame = 2
+	bg_frame = 3
 	_start_level()
 
 func _mission(part):

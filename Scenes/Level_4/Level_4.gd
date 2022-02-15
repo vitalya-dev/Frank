@@ -39,7 +39,7 @@ func _ready():
 		preload("res://Assets/Sounds/Chiptune-148861894.mp3")
 	]
 	mines = 5
-	bg_frame = 3
+	bg_frame = 4
 	_start_level()
 
 func _mission(part):

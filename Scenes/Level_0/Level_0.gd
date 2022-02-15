@@ -27,7 +27,7 @@ var mission_text_3 = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	music = preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")
+	music = [preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")]
 	mines = 2
 	bg_frame = 0
 	_start_level()
