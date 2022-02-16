@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Bounty Battle - Animated Trailer theme-892202470.mp3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

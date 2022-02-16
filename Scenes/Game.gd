@@ -5,7 +5,12 @@ extends Control
 # var a = 2
 # var b = "text"
 
-var current_level = -1
+var levels = [
+	'res://Scenes/Level_-1/Level_-1.tscn', 'res://Scenes/Level_0/Level_0.tscn', 'res://Scenes/Level_1/Level_1.tscn', 
+	'res://Scenes/Level_2/Level_2.tscn', 'res://Scenes/Level_3/Level_3.tscn', 'res://Scenes/Level_4/Level_4.tscn'
+]
+
+var current_level = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +23,10 @@ func _on_level_complete():
 	_load_current_level()
 
 func _load_current_level():
-	var level = load('res://Scenes/Level_%d/Level_%d.tscn' % [current_level, current_level]).instance()
+	var level = load(levels[current_level % len(levels)]).instance()
 	level.connect("complete", self, "_on_level_complete")
 	add_child(level)
-
+	
 func show_menu():
 	get_tree().paused = true	
 	###############################################################

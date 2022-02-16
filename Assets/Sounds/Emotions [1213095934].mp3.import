@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Emotions [1213095934].mp3-3fd83e7608f55647de3a5768be
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

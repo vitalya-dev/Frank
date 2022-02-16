@@ -59,7 +59,7 @@ func _mission(part):
 			return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[2]
+			$Music.stream = music[1]
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)
@@ -77,14 +77,14 @@ func _mission(part):
 			yield(_show_text(mission_text_4), "completed")
 			_mission(part+1)
 			return
-		5:
+		6:
 			yield(_play_final_screen(), "completed")
 			_stamped_mark()
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
 			return
-		6:
+		7:
 			yield(_show_text(mission_text_5), "completed")
 			_mission(part+1)
 			return

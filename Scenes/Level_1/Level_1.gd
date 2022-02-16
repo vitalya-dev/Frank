@@ -34,7 +34,7 @@ var mission_text_3= [
 	"%Надо было отдать тебя в детдом а еще лучше вообще не рожать!",
 	"$Соеденение прервано.",
 	"#...",
-	"#Что за день."
+	"#Господи..."
 ]
 
 
@@ -62,7 +62,7 @@ func _mission(part):
 			return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[2]
+			$Music.stream = music[1]
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)

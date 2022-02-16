@@ -44,7 +44,7 @@ func _ready():
 		preload("res://Assets/Sounds/Bounty Battle - Animated Trailer theme-892202470.mp3")
 	]
 	mines = 5
-	bg_frame = 3
+	bg_frame = 4
 	_start_level()
 
 func _mission(part):
@@ -64,7 +64,7 @@ func _mission(part):
 			return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[2]
+			$Music.stream = music[1]
 			$Music.play()
 			$Music.fade_in()
 			_mission(part+1)
