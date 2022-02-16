@@ -33,4 +33,4 @@ func _mission(part):
 			return
 
 func _esc_pressed():
-	$Exit.emit_signal("pressed")
+	pass

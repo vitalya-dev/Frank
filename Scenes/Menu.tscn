@@ -40,12 +40,12 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 2 )
+
 [sub_resource type="StyleBoxFlat" id=9]
 corner_detail = 1
 anti_aliasing = false
-
-[sub_resource type="DynamicFont" id=10]
-font_data = ExtResource( 2 )
 
 [node name="Menu" type="Control"]
 pause_mode = 2
@@ -58,7 +58,7 @@ __meta__ = {
 
 [node name="Background" type="AnimatedSprite" parent="."]
 frames = SubResource( 8 )
-frame = 3
+frame = 1
 playing = true
 centered = false
 
@@ -69,12 +69,12 @@ margin_left = -89.5
 margin_top = 11.9276
 margin_right = 89.5
 margin_bottom = 40.9276
+custom_fonts/font = SubResource( 10 )
 custom_styles/hover = SubResource( 9 )
 custom_styles/pressed = SubResource( 9 )
 custom_styles/focus = SubResource( 9 )
 custom_styles/disabled = SubResource( 9 )
 custom_styles/normal = SubResource( 9 )
-custom_fonts/font = SubResource( 10 )
 text = "Продолжить"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -87,12 +87,12 @@ margin_left = -89.5
 margin_top = 56.5326
 margin_right = 89.5
 margin_bottom = 85.5326
+custom_fonts/font = SubResource( 10 )
 custom_styles/hover = SubResource( 9 )
 custom_styles/pressed = SubResource( 9 )
 custom_styles/focus = SubResource( 9 )
 custom_styles/disabled = SubResource( 9 )
 custom_styles/normal = SubResource( 9 )
-custom_fonts/font = SubResource( 10 )
 text = "Выход"
 __meta__ = {
 "_edit_use_anchors_": false
