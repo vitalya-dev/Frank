@@ -15,8 +15,9 @@ func _ready():
 	pass
 
 func _start_level():
-	$Music.pitch_scale = 10
+	#$Music.pitch_scale = 10
 	$BG.show_default(bg_frame)
+	$Score.max_value(a_score())
 	yield(get_tree(), "idle_frame")
 	_mission(0)
 
@@ -134,11 +135,8 @@ func _add_score(event):
 		$Score.value += 1
 
 func _score_to_mark(score):
-	var top_score = 0
-	for i in music:
-		top_score += i.get_length() * scores_in_sec
-	
-	if score > top_score:
+	var top_score = a_score()
+	if score > a_score():
 		return "A"
 	elif score > top_score * 0.8:
 		return "B"
@@ -149,6 +147,20 @@ func _score_to_mark(score):
 	else:
 		return "F"
 
+func a_score():
+	var _a_score = 0
+	for i in music:
+		_a_score += i.get_length() * scores_in_sec
+	return _a_score
+
+func b_score():
+	return a_score() * 0.8
+
+func c_score():
+	return a_score() * 0.6
+
+func d_score():
+	return a_score() * 0.4
 
 
 func _solve():

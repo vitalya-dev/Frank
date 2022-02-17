@@ -18,6 +18,8 @@ func value_set(val):
 func value_get():
 	return value
 
+func max_value(val):
+	$ProgressBar.max_value = val
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -28,6 +30,7 @@ func _process(delta):
 		if !$Sound.playing:
 			$Sound.play()
 		text = str(_score)
+		$ProgressBar.value = _score
 	else:
 		material.set_shader_param("shake", 0.0)
 		material.set_shader_param("strength", 0.0)

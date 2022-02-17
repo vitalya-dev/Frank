@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Shared/Score.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,12 @@
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 0.196078 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 0.196078 )
 
 [node name="Score" type="Label"]
 margin_left = 5.0
@@ -21,3 +27,16 @@ __meta__ = {
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+margin_left = -5.0
+margin_right = 362.0
+margin_bottom = 28.0
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
