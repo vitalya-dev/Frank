@@ -18,13 +18,21 @@ func _ready():
 
 func _on_level_complete():
 	current_level += 1
+	_unload_current_level()
+	_load_current_level()
+
+func _on_level_fail():
+	_unload_current_level()
+	_load_current_level()
+
+func _unload_current_level():
 	$Level.queue_free()
 	remove_child($Level)
-	_load_current_level()
 
 func _load_current_level():
 	var level = load(levels[current_level % len(levels)]).instance()
 	level.connect("complete", self, "_on_level_complete")
+	level.connect("fail", self, "_on_level_fail")
 	add_child(level)
 	
 func show_menu():

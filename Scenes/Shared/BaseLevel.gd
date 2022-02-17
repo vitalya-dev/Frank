@@ -8,6 +8,7 @@ export (int) var bg_frame = 0
 var music = []
 
 signal complete()
+signal fail()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

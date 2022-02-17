@@ -1,5 +1,10 @@
 extends "res://Scenes/Shared/BaseLevel.gd"
 
+var nonono_text = [
+	"#Нет нет нет. Я могу намного лучше."
+]
+
+
 var mission_text_1 = [
 	"@Добро пожаловать в симуляцию, сержант.",
 	"@Пространство поделено на смежные ячейки.",
@@ -59,6 +64,17 @@ func _mission(part):
 			_mission(part+1)
 			return
 		4:
+			match _score_to_mark($Score.value):
+				"A":
+					_mission(part+1)
+				"B":
+					_mission(part+1)
+				_:
+					yield(_show_text(nonono_text), "completed")
+					emit_signal("fail") 
+			return
+			
+		5:
 			yield(_show_text(mission_text_3), "completed")
 			_mission(part+1)
 			return
