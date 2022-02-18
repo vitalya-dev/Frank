@@ -47,34 +47,24 @@ func _mission(part):
 			return
 		1:	
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[0]
-			$Music.play()
-			$Music.fade_in()
 			_mission(part+1)
 			return
 		2:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
+			_setup_gameplay(music[0])
+			if yield(_play(), "completed"):
+				_mission(part+1)
+				return
+			else:
+				yield(_show_text(nonono_text), "completed")
+				_mission(part)
+				return
 		3:
 			yield(_play_final_screen(), "completed")
-			_stamped_mark()
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
-			return
+			return	
 		4:
-			match _score_to_mark($Score.value):
-				"A":
-					_mission(part+1)
-				"B":
-					_mission(part+1)
-				_:
-					yield(_show_text(nonono_text), "completed")
-					emit_signal("fail") 
-			return
-			
-		5:
 			yield(_show_text(mission_text_3), "completed")
 			_mission(part+1)
 			return

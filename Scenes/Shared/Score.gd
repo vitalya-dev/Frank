@@ -6,6 +6,8 @@ extends Label
 # var b = "text"
 
 var value = 0 setget value_set, value_get
+var max_value = 0 setget max_value_set, max_value_get
+var current  setget ,current_value_get
 var _score = value
 
 # Called when the node enters the scene tree for the first time.
@@ -18,8 +20,20 @@ func value_set(val):
 func value_get():
 	return value
 
-func max_value(val):
+func max_value_set(val):
 	$ProgressBar.max_value = val
+
+func max_value_get():
+	return $ProgressBar.max_value
+
+func reset():
+	value = 0
+	_score = 0
+	$ProgressBar.max_value = 0
+	$ProgressBar.value = 0
+
+func current_value_get():
+	return $ProgressBar.value
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

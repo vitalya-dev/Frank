@@ -17,7 +17,6 @@ func _ready():
 func _start_level():
 	#$Music.pitch_scale = 10
 	$BG.show_default(bg_frame)
-	$Score.max_value(a_score())
 	yield(get_tree(), "idle_frame")
 	_mission(0)
 
@@ -45,21 +44,22 @@ func _play_credits_screen():
 	$VictorySFX.play()
 	yield($VictorySFX, "finished")
 
-func _stamped_mark():
-	var grade = preload('res://Scenes/Shared/Grade.tscn').instance()
-	add_child(grade, true);
-	grade.position = Vector2(63, 53)
-	grade.stamped(_score_to_mark($Score.value))	
 
-func _hide_mark():
-	$Grade.queue_free()
+func _prepare_field(mines):
+	$Field.reset()
+	$Field.distribute_mines(mines)
+	$Field.get_safty_tile().swing()
+	$OpenSFX.play()
 
-func _show_text(text):
-	_prepare_field(0)
-	yield(_message_window(text), "completed")
+func _setup_gameplay(music):
+	$Music.stream = music
+	$Score.reset()
+	$Score.max_value = music.get_length() * scores_in_sec
 
-func _play_while_music_play():
-	while $Music.is_playing():
+func _play():
+	$Music.play()
+	$Music.fade_in()
+	while $Music.is_playing() and $Score.current < $Score.max_value:
 		_prepare_field(mines)
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
@@ -74,7 +74,38 @@ func _play_while_music_play():
 			#===========================#
 			$BG.show_default(bg_frame)
 			#===========================#
-			continue	
+			continue
+	$Music.stop()
+	return $Score.current >= $Score.max_value
+
+func _solve():
+	var _result = null
+	##################################
+	while true:
+		var event = yield(Events, "event")
+		_play_sfx(event)
+		_add_score(event)
+		if _failed(event):
+			_result = false
+			break
+		elif _solved(event):
+			_result = true
+			break
+	##################################
+	return _result
+
+func _failed(event):
+	if event["owner"] == "music" and event["name"] == "finished":
+		return true
+	if event["name"] == "tile_open" and event["tile"].mine:
+		return true
+	return false
+
+func _solved(event):
+	if $Field.solved():
+		return true
+	else:
+		return false
 
 func _play_sfx(event):
 	if event["owner"] == "field" and event["name"] == "tile_open":
@@ -86,7 +117,18 @@ func _play_sfx(event):
 		$FlagSFX.play()
 		$Voice.talk()
 
-		
+func _add_score(event):
+	if event["name"] == "tile_open":
+		$Score.value += 5
+	elif event["name"] == "tile_flag":
+		$Score.value += 1
+	elif event["name"] == "tile_unflag":
+		$Score.value += 1
+
+func _show_text(text):
+	_prepare_field(0)
+	yield(_message_window(text), "completed")
+
 func _message_window(messages):
 	var message_window = preload('res://Scenes/Shared/MessageWindow.tscn').instance()
 	message_window.get_node("Message").messages = messages
@@ -102,81 +144,3 @@ func _message_window(messages):
 	message_window.get_node("Message").avatar_10 = preload("res://Assets/Graphics/Avatars/avatar_ahmed_dead.png")
 	add_child(message_window, true);
 	yield(message_window, "tree_exited")
-
-
-func _prepare_field(mines):
-	$Field.reset()
-	$Field.distribute_mines(mines)
-	$Field.get_safty_tile().swing()
-	$OpenSFX.play()
-
-
-
-func _failed(event):
-	if event["name"] == "tile_open" and event["tile"].mine:
-		return true
-	else:
-		return false
-
-func _solved(event):
-	if event["owner"] == "music" and event["name"] == "finished":
-		return true
-	elif $Field.solved():
-		return true
-	else:
-		return false
-
-func _add_score(event):
-	if event["name"] == "tile_open":
-		$Score.value += 5
-	elif event["name"] == "tile_flag":
-		$Score.value += 1
-	elif event["name"] == "tile_unflag":
-		$Score.value += 1
-
-func _score_to_mark(score):
-	var top_score = a_score()
-	if score > a_score():
-		return "A"
-	elif score > top_score * 0.8:
-		return "B"
-	elif score > top_score * 0.6:
-		return "C"
-	elif score > top_score * 0.4:
-		return "D"
-	else:
-		return "F"
-
-func a_score():
-	var _a_score = 0
-	for i in music:
-		_a_score += i.get_length() * scores_in_sec
-	return _a_score
-
-func b_score():
-	return a_score() * 0.8
-
-func c_score():
-	return a_score() * 0.6
-
-func d_score():
-	return a_score() * 0.4
-
-
-func _solve():
-	var _result = null
-	##################################
-	while true:
-		var event = yield(Events, "event")
-		_play_sfx(event)
-		_add_score(event)
-		if _failed(event):
-			_result = false
-			$Score.value -= 300
-			break
-		elif _solved(event):
-			_result = true
-			$Score.value += 150
-			break
-	##################################
-	return _result
