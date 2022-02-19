@@ -1,25 +1,56 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Shared/Score.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/PressStart2P-vaV7.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/Sounds/118236__pierrecartoons1979__classic-slot-machine.wav" type="AudioStream" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float shake = 0.0;
+uniform vec4 font_color : hint_color;
+
+const float PI = 3.1415926535;
+
+uniform float strength: hint_range(0., 1.) = 0.5;
+uniform float speed: hint_range(0., 10.) = 0.5;
+uniform float angle: hint_range(0., 360.) = 0.;
+
+void vertex() {
+    // Animate Sprite moving in big circle around its location
+    VERTEX += vec2(0, sin(40.0*TIME) * shake);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/shake = 0.0
+shader_param/font_color = Color( 1, 1, 1, 1 )
+shader_param/strength = 0.0
+shader_param/speed = 0.151
+shader_param/angle = 171.628
+
+[sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 1, 1, 1, 0.196078 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0, 0, 0, 0.196078 )
 
-[node name="Score" type="Label"]
-margin_left = 5.0
-margin_right = 63.0
-margin_bottom = 28.0
-custom_fonts/font = SubResource( 1 )
-text = "22"
-valign = 1
+[node name="Score" type="ProgressBar"]
+material = SubResource( 2 )
+anchor_right = 1.0
+margin_left = 2.0
+margin_right = -2.0
+margin_bottom = 17.0
+custom_fonts/font = SubResource( 4 )
+custom_styles/fg = SubResource( 6 )
+custom_styles/bg = SubResource( 5 )
+max_value = 0.0
+step = 1.0
+percent_visible = false
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -27,16 +58,3 @@ __meta__ = {
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-show_behind_parent = true
-anchor_right = 1.0
-margin_left = -5.0
-margin_right = 362.0
-margin_bottom = 28.0
-custom_styles/fg = SubResource( 2 )
-custom_styles/bg = SubResource( 3 )
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}

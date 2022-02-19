@@ -1,7 +1,7 @@
 extends Control
 
 # Declare member variables here. Examples
-export(int) var scores_in_sec = 50
+export(int) var scores_in_sec = 20
 export(int) var mines = 5
 export (int) var bg_frame = 0
 
@@ -59,7 +59,7 @@ func _setup_gameplay(music):
 func _play():
 	$Music.play()
 	$Music.fade_in()
-	while $Music.is_playing() and $Score.current < $Score.max_value:
+	while $Music.is_playing() and $Score.value < $Score.max_value:
 		_prepare_field(mines)
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
@@ -76,7 +76,7 @@ func _play():
 			#===========================#
 			continue
 	$Music.stop()
-	return $Score.current >= $Score.max_value
+	return $Score.value >= $Score.max_value
 
 func _solve():
 	var _result = null
@@ -102,10 +102,11 @@ func _failed(event):
 	return false
 
 func _solved(event):
+	if $Score.value >= $Score.max_value:
+		return true
 	if $Field.solved():
 		return true
-	else:
-		return false
+	return false
 
 func _play_sfx(event):
 	if event["owner"] == "field" and event["name"] == "tile_open":
@@ -119,11 +120,11 @@ func _play_sfx(event):
 
 func _add_score(event):
 	if event["name"] == "tile_open":
-		$Score.value += 5
+		$Score.score += 5
 	elif event["name"] == "tile_flag":
-		$Score.value += 1
+		$Score.score += 1
 	elif event["name"] == "tile_unflag":
-		$Score.value += 1
+		$Score.score += 1
 
 func _show_text(text):
 	_prepare_field(0)
