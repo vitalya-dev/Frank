@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Graphics/sparkle.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0.00297619, 0.443452, 0.761905, 0.994048 )
+colors = PoolColorArray( 0.811765, 1, 0.439216, 1, 0.560784, 0.870588, 0.364706, 1, 0.235294, 0.639216, 0.439216, 1, 0.239216, 0.431373, 0.439216, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+min_value = -200.0
+max_value = 200.0
+_data = [ Vector2( 0, -195.833 ), 0.0, 0.0, 0, 0, Vector2( 0.113043, 200 ), 0.0, 0.0, 0, 0, Vector2( 1, -200 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0.0115942, 0.03125 ), 0.0, 0.0, 0, 0, Vector2( 0.249275, 0.510417 ), 0.0, 0.0, 0, 0, Vector2( 0.495652, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.753623, 0.520833 ), 0.0, 0.0, 0, 0, Vector2( 0.988406, 0.03125 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 1
+emission_sphere_radius = 0.01
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 200.0
+radial_accel_random = 0.3
+radial_accel_curve = SubResource( 4 )
+scale = 0.1
+scale_random = 0.3
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 2 )
+
+[node name="GExplosion" type="Node2D"]
+
+[node name="Particles2D" type="Particles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+draw_order = 1
+process_material = SubResource( 7 )
+texture = ExtResource( 1 )
