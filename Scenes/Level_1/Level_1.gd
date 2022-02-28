@@ -53,7 +53,7 @@ func _mission(part):
 			_mission(part+1)
 			return
 		1:
-			yield(_play_while_music_play(), "completed")
+	`		yield(_play_while_music_play(), "completed")
 			_mission(part+1)
 			return
 		2:
