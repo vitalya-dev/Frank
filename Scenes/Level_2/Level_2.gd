@@ -1,5 +1,9 @@
 extends "res://Scenes/Shared/BaseLevel.gd"
 
+var nonono_text = [
+	"#Нет нет нет. Я могу намного лучше."
+]
+
 var mission_text_1 = [
 	"@Отличная работа сержант, но наша работа не закончена.",
 	"@Отправляйся на територию и убедись что там все чисто.",
@@ -40,33 +44,36 @@ func _mission(part):
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
-			$Music.stream = music[0]			
-			$Music.play()
-			$Music.fade_in()
 			_mission(part+1)
 			return
 		1:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
+			_setup_gameplay(music[0])
+			if yield(_play(), "completed"):
+				_mission(part+1)
+				return
+			else:
+				yield(_show_text(nonono_text), "completed")
+				_mission(part)
+				return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[1]
-			$Music.play()
-			$Music.fade_in()
 			_mission(part+1)
 			return
 		3:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
+			_setup_gameplay(music[1])
+			if yield(_play(), "completed"):
+				_mission(part+1)
+				return
+			else:
+				yield(_show_text(nonono_text), "completed")
+				_mission(part)
+				return
 		4:
 			yield(_show_text(mission_text_3), "completed")
 			_mission(part+1)
 			return
 		5:
 			yield(_play_final_screen(), "completed")
-			_stamped_mark()
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)

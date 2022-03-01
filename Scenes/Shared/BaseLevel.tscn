@@ -1,0 +1,76 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Scenes/Shared/Mouse.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Shared/Score.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Shared/Voice.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Shared/Field.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Shared/Music.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Shared/BG.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Level_0/Clock.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Sounds/SFX/open_sfx.wav" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/266916__coolguy244e__gun-shot-bullet-hit.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/SFX/fire_sfx.wav" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/SFX/flag_sfx.wav" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/SFX/victory_sfx.wav" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0000.wav" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0400.wav" type="AudioStream" id=15]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0200.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0300.wav" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0000.wav" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0100.wav" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sounds/239900__thesubber13__scream-1.ogg" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0400.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0200.wav" type="AudioStream" id=22]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleGo0100.wav" type="AudioStream" id=23]
+[ext_resource path="res://Assets/Sounds/NV_Custom_Yunbou_CustomWhistleStop0300.wav" type="AudioStream" id=24]
+
+[node name="Level" type="Control"]
+pause_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 424.0 ]
+}
+
+[node name="BG" parent="." instance=ExtResource( 7 )]
+animation = "default"
+
+[node name="Field" parent="." instance=ExtResource( 5 )]
+rect_pivot_offset = Vector2( -344, 72 )
+
+[node name="OpenSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="FlagSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[node name="FireSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="ShotSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="VictorySFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="Music" parent="." instance=ExtResource( 6 )]
+volume_db = -30.0
+
+[node name="Scream" parent="." instance=ExtResource( 6 )]
+stream = ExtResource( 20 )
+volume_db = -10.0
+script = null
+
+[node name="Voice" parent="." instance=ExtResource( 4 )]
+volume_db = 10.0
+voices = [ ExtResource( 14 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 24 ), ExtResource( 21 ) ]
+
+[node name="Mouse" parent="." instance=ExtResource( 2 )]
+
+[node name="Score" parent="." instance=ExtResource( 3 )]
+custom_colors/font_color = Color( 0.517647, 0.196078, 0.196078, 1 )
+
+[node name="Clock" type="Node" parent="."]
+script = ExtResource( 8 )
