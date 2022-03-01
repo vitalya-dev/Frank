@@ -10,7 +10,7 @@ var levels = [
 	'res://Scenes/Level_2/Level_2.tscn', 'res://Scenes/Level_3/Level_3.tscn', 'res://Scenes/Level_4/Level_4.tscn'
 ]
 
-var current_level = 3
+var current_level = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

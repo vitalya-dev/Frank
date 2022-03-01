@@ -1,16 +1,18 @@
 extends "res://Scenes/Shared/BaseLevel.gd"
 
 
+var nonono_text = [
+	"#Нет нет нет. Я могу намного лучше."
+]
+
 var mission_text_1 = [
 	")Мы убиваем себя, работаем все больше, наслаждаемся жизнью все меньше.", 
 	")Все ради горы продуктов, потребления которой не приносит нам радости.",
-	")Простые люди покупают вещь — и радуются. А безудержное потребление убивает эту радость."
+	
 ]
 
 var mission_text_2 = [
-	")Мир все крепче держится за свою привычку потреблять каждый год постоянно нарастающие количества...",
-	")...каменного угля, нефти, древесины, чернозема и тысячи других видов природных ресурсов...",
-	")...которые мы используем для изготовления не нужных нам вещей."
+	")Простые люди покупают вещь — и радуются. А безудержное потребление убивает эту радость."
 ]
 
 var mission_text_3 = [
@@ -22,6 +24,8 @@ var mission_text_4 = [
 ]
 
 var mission_text_5 = [
+	"#Оператор.",	
+	"$Оператор.",
 	"#Наверное то что произошло было важно.",
 	"#Ну что б я сдох если хоть что нибудь понял."
 ]
@@ -33,7 +37,7 @@ func _ready():
 		preload("res://Assets/Sounds/Chiptune-148861894.mp3")
 	]
 	mines = 5
-	bg_frame = 4
+	bg_frame = 3
 	_start_level()
 
 func _mission(part):
@@ -42,26 +46,30 @@ func _mission(part):
 	match part:
 		0:
 			yield(_show_text(mission_text_1), "completed")
-			$Music.stream = music[0]			
-			$Music.play()
-			$Music.fade_in()
 			_mission(part+1)
 			return
 		1:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
+			_setup_gameplay(music[0])
+			if yield(_play(), "completed"):
+				_mission(part+1)
+				return
+			else:
+				yield(_show_text(nonono_text), "completed")
+				_mission(part)
+				return
 		2:
 			yield(_show_text(mission_text_2), "completed")
-			$Music.stream = music[1]
-			$Music.play()
-			$Music.fade_in()
 			_mission(part+1)
 			return
 		3:
-			yield(_play_while_music_play(), "completed")
-			_mission(part+1)
-			return
+			_setup_gameplay(music[1])
+			if yield(_play(), "completed"):
+				_mission(part+1)
+				return
+			else:
+				yield(_show_text(nonono_text), "completed")
+				_mission(part)
+				return
 		4:
 			yield(_show_text(mission_text_3), "completed")
 			_mission(part+1)
@@ -73,7 +81,6 @@ func _mission(part):
 			return
 		6:
 			yield(_play_final_screen(), "completed")
-			_stamped_mark()
 			while (yield(Events, "event")["owner"] != "mouse"):
 				pass
 			_mission(part+1)
