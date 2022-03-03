@@ -1,7 +1,7 @@
 extends Control
 
 # Declare member variables here. Examples
-export(int) var scores_in_sec = 1
+export(int) var scores_in_sec = 10
 export(int) var mines = 5
 export (int) var bg_frame = 0
 
@@ -69,11 +69,11 @@ func _play():
 	$Field.visible = true
 	$Music.play()
 	$Music.fade_in()
-	while $Music.is_playing() and $Score.value < $Score.max_value:
+	while $Music.is_playing():
 		_prepare_field(mines)
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
-			if $Score.value >= $Score.max_value:
+			if $Score.value >= $Score.max_value and $Field.solved():
 				$Field.visible = false
 				_create_particles()
 				$Music.stop()
@@ -116,8 +116,6 @@ func _failed(event):
 	return false
 
 func _solved(event):
-	if $Score.value >= $Score.max_value:
-		return true
 	if $Field.solved():
 		return true
 	return false
@@ -134,7 +132,7 @@ func _play_sfx(event):
 
 func _add_score(event):
 	if event["name"] == "tile_open":
-		$Score.score += 5
+		$Score.score += -$Score.score if event["tile"].mine else +5
 	elif event["name"] == "tile_flag":
 		$Score.score += 1
 	elif event["name"] == "tile_unflag":
