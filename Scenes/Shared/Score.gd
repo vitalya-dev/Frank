@@ -25,10 +25,14 @@ func reset():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if value != score:
+	var pps = 720 # point per secod
+	var fps = int(1 / delta) # frame per secod
+	var ppf   = int(pps / fps) # point per frame
+	if abs(value - score) > ppf:
 		material.set_shader_param("shake", 1.0)
-		value += sign(score - value)
+		value += sign(score - value) * ppf
 		if !$Sound.playing:
 			$Sound.play()
 	else:
+		value = score
 		material.set_shader_param("shake", 0.0)
