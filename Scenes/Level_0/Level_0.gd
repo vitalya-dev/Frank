@@ -33,6 +33,7 @@ func _ready():
 	music = [preload("res://Assets/Sounds/Gravity Falls Opening (8-Bit Remix)-54452827.mp3")]
 	mines = 2
 	bg_frame = 0
+	scores_in_sec *= 4
 	_start_level()
 
 func _mission(part):

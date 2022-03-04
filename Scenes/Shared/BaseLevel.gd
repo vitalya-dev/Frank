@@ -55,7 +55,7 @@ func _prepare_field(mines):
 func _setup_gameplay(music):
 	$Music.stream = music
 	$Score.reset()
-	$Score.max_value = music.get_length() * scores_in_sec
+	$Score.max_value = int(music.get_length() * scores_in_sec)
 
 
 func _create_particles():
