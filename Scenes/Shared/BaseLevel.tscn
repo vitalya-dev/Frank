@@ -56,7 +56,7 @@ stream = ExtResource( 10 )
 stream = ExtResource( 13 )
 
 [node name="Music" parent="." instance=ExtResource( 6 )]
-volume_db = -30.0
+volume_db = -25.0
 
 [node name="Scream" parent="." instance=ExtResource( 6 )]
 stream = ExtResource( 20 )
