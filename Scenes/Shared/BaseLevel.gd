@@ -1,7 +1,7 @@
 extends Control
 
 # Declare member variables here. Examples
-export(int) var scores_in_sec = 10
+export(int) var scores_in_sec = 1
 export(int) var mines = 5
 export (int) var bg_frame = 0
 
