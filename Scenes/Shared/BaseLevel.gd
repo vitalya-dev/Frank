@@ -1,7 +1,7 @@
 extends Control
 
 # Declare member variables here. Examples
-export(int) var scores_in_sec = 10
+export(int) var scores_in_sec = 5
 export(int) var mines = 5
 export (int) var bg_frame = 0
 
@@ -66,16 +66,16 @@ func _create_particles():
 
 func _play():
 	$Score.visible = true
-	$Field.visible = true
 	$Music.play()
 	$Music.fade_in()
 	while $Music.is_playing():
 		_prepare_field(mines)
+		$Field.visible = true
 		if (yield(_solve(), "completed")):
 			$VictorySFX.play()
+			$Field.visible = false
+			_create_particles()
 			if $Score.value >= $Score.max_value and $Field.solved():
-				$Field.visible = false
-				_create_particles()
 				$Music.stop()
 			yield($VictorySFX, "finished")
 			continue

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Graphics/particles.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sounds/SFX/S1_CB.wav" type="AudioStream" id=2]
@@ -12,37 +12,31 @@ particles_anim_loop = true
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.750725, 0.447863 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=3]
-curve = SubResource( 2 )
-
-[sub_resource type="ParticlesMaterial" id=4]
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 360.0
-initial_velocity_random = 1.0
-angular_velocity = 360.0
-angular_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-radial_accel = 100.0
-angle_random = 1.0
-scale_random = 0.1
-scale_curve = SubResource( 3 )
-anim_speed = 8.0
-anim_speed_random = 0.1
-anim_offset_random = 1.0
-
-[node name="Particles" type="Particles2D"]
+[node name="Particles" type="CPUParticles2D"]
 material = SubResource( 1 )
 position = Vector2( 213, 120 )
 emitting = false
 amount = 64
 lifetime = 2.0
 one_shot = true
+preprocess = 0.1
 explosiveness = 1.0
-process_material = SubResource( 4 )
+local_coords = false
+draw_order = 1
 texture = ExtResource( 1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 360.0
+initial_velocity_random = 1.0
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+radial_accel = 100.0
+angle_random = 1.0
+scale_amount_random = 0.1
+scale_amount_curve = SubResource( 2 )
+anim_speed = 8.0
+anim_speed_random = 0.1
+anim_offset_random = 1.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
