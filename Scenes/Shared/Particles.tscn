@@ -26,16 +26,18 @@ draw_order = 1
 texture = ExtResource( 1 )
 spread = 180.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 360.0
+initial_velocity = 400.0
 initial_velocity_random = 1.0
 angular_velocity = 360.0
 angular_velocity_random = 1.0
+linear_accel = 10.0
 radial_accel = 100.0
 angle_random = 1.0
 scale_amount_random = 0.1
 scale_amount_curve = SubResource( 2 )
 anim_speed = 8.0
 anim_speed_random = 0.1
+anim_offset = 1.0
 anim_offset_random = 1.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
